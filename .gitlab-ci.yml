@@ -3,20 +3,15 @@ stages:
   - build
 
 pre-commit-check:
-  image: python:3.11
+  image: node:22
   stage: test
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends python3 python3-pip
     - pip3 install --no-cache-dir pre-commit
+    - npm ci
   script:
     - pre-commit run --all-files --show-diff-on-failure
-
-npm-ci:
-  image: node:22-bookworm
-  stage: test
-  script:
-    - npm ci
 
 build-multiarch-docker-image:
   image:
