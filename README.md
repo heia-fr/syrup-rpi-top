@@ -41,5 +41,4 @@ You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
 
-
 http://localhost:5173/?B=ws://127.0.0.1:8090&T=heiafr/ms
