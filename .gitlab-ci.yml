@@ -13,6 +13,12 @@ pre-commit-check:
   script:
     - pre-commit run --all-files --show-diff-on-failure
 
+npm-ci:
+  image: node:22-bookworm
+  stage: test
+  script:
+    - npm ci
+
 build-multiarch-docker-image:
   image:
     name: moby/buildkit:rootless
