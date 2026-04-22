@@ -3,7 +3,7 @@ stages:
   - build
 
 pre-commit-check:
-  image: node:22-bookworm
+  image: python:3.11
   stage: test
   before_script:
     - apt-get update
