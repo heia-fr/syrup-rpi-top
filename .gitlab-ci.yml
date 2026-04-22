@@ -16,11 +16,11 @@ pre-commit-check:
 build-multiarch-docker-image:
   image:
     name: moby/buildkit:rootless
-    entrypoint: [ "" ]
+    entrypoint: ['']
   stage: build
   variables:
     BUILDKITD_FLAGS: --oci-worker-no-process-sandbox
-    DOCKER_CONFIG: "$CI_PROJECT_DIR/.docker"
+    DOCKER_CONFIG: '$CI_PROJECT_DIR/.docker'
     CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
     IMAGE_TAG_SHA: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     IMAGE_TAG_LATEST: $CI_REGISTRY_IMAGE:latest

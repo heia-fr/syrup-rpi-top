@@ -16,7 +16,7 @@ repos:
         name: prettier check
         entry: npx prettier --check
         language: system
-        types_or: [ javascript, jsx, ts, tsx, svelte, json, yaml, markdown, css, html ]
+        types_or: [javascript, jsx, ts, tsx, svelte, json, yaml, markdown, css, html]
 
       - id: eslint
         name: eslint
