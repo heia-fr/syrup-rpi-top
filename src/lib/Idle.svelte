@@ -1,0 +1,1 @@
+<img class="absolute z-500 w-full h-full" src="/media/machine-a-sirops.png" alt="Machine à sirops" />
