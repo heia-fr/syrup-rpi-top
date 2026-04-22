@@ -9,7 +9,6 @@ pre-commit-check:
     - apt-get update
     - apt-get install -y --no-install-recommends python3 python3-pip
     - pip3 install --no-cache-dir pre-commit
-    - npm ci
   script:
     - pre-commit run --all-files --show-diff-on-failure
 
