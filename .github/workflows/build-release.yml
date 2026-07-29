@@ -39,6 +39,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Pull Git LFS files
+        run: git lfs pull
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
@@ -68,6 +71,7 @@ jobs:
         if: startsWith(github.event.ref, 'refs/tags/v')
         uses: docker/build-push-action@v6
         with:
+          context: .
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
