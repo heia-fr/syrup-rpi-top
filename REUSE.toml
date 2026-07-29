@@ -4,6 +4,7 @@ version = 1
 path = [
     "README.md",
     ".gitignore",
+    ".gitattributes",
     ".dockerignore",
     ".pre-commit-config.yaml",
     ".gitlab-ci.yml",
