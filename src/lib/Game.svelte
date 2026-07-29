@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+
+SPDX-License-Identifier: MIT
+-->
+
 <script lang="ts">
 	import { ui, State } from '$lib/shared.svelte';
 	import Idle from './Idle.svelte';
@@ -52,6 +58,11 @@
 			<BatteryBg />
 			<BatteryLevel />
 		{/if}
+	{:else if ui.state === State.Ready}
+		<Timer />
+		<Teams />
+		<BatteryBg />
+		<BatteryLevel />
 	{:else if ui.state === State.Finished}
 		<Winner />
 	{/if}

@@ -10,6 +10,11 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
 
+  - repo: https://codeberg.org/fsfe/reuse-tool
+    rev: v6.2.0
+    hooks:
+      - id: reuse
+
   - repo: local
     hooks:
       - id: prettier-check

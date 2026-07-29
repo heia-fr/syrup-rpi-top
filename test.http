@@ -1,0 +1,21 @@
+@MqttBroker=127.0.0.1
+@TopicBase=heiafr/ms/
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}reset
+
+1
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}ready
+
+{
+    "n": 1
+}
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}start
+
+{
+    "n": 2
+}

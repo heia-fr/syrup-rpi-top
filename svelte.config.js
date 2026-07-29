@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+//
+// SPDX-License-Identifier: MIT
+
 import adapter from '@sveltejs/adapter-node';
 
 /** @type {import('@sveltejs/kit').Config} */

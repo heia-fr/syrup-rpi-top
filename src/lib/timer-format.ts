@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+//
+// SPDX-License-Identifier: MIT
+
 import { Duration } from 'luxon';
 
 export function formatTimer(value: unknown): string {

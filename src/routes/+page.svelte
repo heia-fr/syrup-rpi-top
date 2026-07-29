@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+
+SPDX-License-Identifier: MIT
+-->
+
 <script lang="ts">
 	import Video from '$lib/Video.svelte';
 	import Game from '$lib/Game.svelte';

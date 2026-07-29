@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+
+SPDX-License-Identifier: MIT
+-->
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';

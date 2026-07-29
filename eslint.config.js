@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+//
+// SPDX-License-Identifier: MIT
+
 import prettier from 'eslint-config-prettier';
 import path from 'node:path';
 import { includeIgnoreFile } from '@eslint/compat';

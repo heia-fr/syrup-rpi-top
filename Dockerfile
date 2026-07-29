@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+#
+# SPDX-License-Identifier: MIT
+
 FROM node:22-alpine AS deps
 WORKDIR /app
 

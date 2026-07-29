@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Jacques Supcik <jacques.supci@hefr.ch>
+//
+// SPDX-License-Identifier: MIT
+
 import mqtt from 'mqtt';
 
 export const BIKE_RED = '#C32823';
@@ -5,6 +9,7 @@ export const BIKE_BLUE = '#007CB7';
 
 export enum State {
 	Idle,
+	Ready,
 	Running,
 	Finished
 }
@@ -111,8 +116,24 @@ function message_handler(topic: string, payload: Record<string, unknown>) {
 			pauseTimer();
 			break;
 
+		case 'ready': {
+			const n = payload['n'];
+			if (typeof n === 'number' || typeof n === 'string') {
+				ui.n_bikes = Number(n);
+			}
+
+			ui.state = State.Ready;
+			ui.level[0] = 0;
+			ui.level[1] = 0;
+
+			stopTimer();
+			clearDelayedStart();
+			break;
+		}
+
 		case 'start': {
 			if (ui.state === State.Running) {
+				console.warn('Received start command while already running. Ignoring.');
 				return;
 			}
 			const n = payload['n'];
