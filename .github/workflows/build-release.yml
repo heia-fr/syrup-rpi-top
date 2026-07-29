@@ -50,7 +50,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v6
         with:
-          images: ghcr.io/${{ env.IMAGE_NAME }}
+          images: ghcr.io/${{ github.repository }}
           tags: |
             type=schedule,priority=1000,pattern=nightly
             type=semver,priority=900,pattern={{version}}
