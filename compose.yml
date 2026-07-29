@@ -3,4 +3,3 @@ services:
     image: ghcr.io/heia-fr/syrup-rpi-top:latest
     ports:
       - 3000:5000"
-    
