@@ -13,6 +13,7 @@ SPDX-License-Identifier: MIT
 	import Teams from './Teams.svelte';
 	import Winner from './Winner.svelte';
 	import CountDown from './CountDown.svelte';
+	import Needle from './Needle.svelte';
 
 	const HUD_DELAY_MS = 1000;
 	let showHud = $state(false);
@@ -57,12 +58,14 @@ SPDX-License-Identifier: MIT
 			<Teams />
 			<BatteryBg />
 			<BatteryLevel />
+			<Needle />
 		{/if}
 	{:else if ui.state === State.Ready}
 		<Timer />
 		<Teams />
 		<BatteryBg />
 		<BatteryLevel />
+		<Needle />
 	{:else if ui.state === State.Finished}
 		<Winner />
 	{/if}

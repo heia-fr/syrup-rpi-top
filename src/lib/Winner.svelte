@@ -8,12 +8,15 @@ SPDX-License-Identifier: MIT
 	import { ui } from '$lib/shared.svelte';
 	import { formatTimer } from '$lib/timer-format';
 	import { onMount } from 'svelte';
+	import blueWin from './Winner.assets/Panel-256x384-WINNER-BLUE.mp4';
+	import redWin from './Winner.assets/Panel-256x384-WINNER-RED.mp4';
+	import soloWin from './Winner.assets/Panel-256x384-WINNER-SOLO.mp4';
 
 	const SHOW_TIMER_DELAY_MS = 1400;
 
-	const BLUE_WIN = '/media/Panel-256x384-WINNER-BLUE.mp4';
-	const RED_WIN = '/media/Panel-256x384-WINNER-RED.mp4';
-	const SOLO_WIN = '/media/Panel-256x384-WINNER-SOLO.mp4';
+	const BLUE_WIN = blueWin;
+	const RED_WIN = redWin;
+	const SOLO_WIN = soloWin;
 
 	let video: HTMLVideoElement | undefined;
 	let showTimer = $state(false);

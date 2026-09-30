@@ -17,13 +17,13 @@ SPDX-License-Identifier: MIT
 			Red
 		</div>
 		<div
-			class="absolute top-0 right-0 z-70 w-1/2 text-center text-[20pt] font-bold"
+			class="absolute top-0 -right-1.5 z-70 w-1/2 text-center text-[20pt] font-bold"
 			style={`color: ${BIKE_BLUE}`}
 		>
 			Blue
 		</div>
-		<div class="absolute top-0 z-70 w-full text-center text-[20pt]">vs.</div>
+		<div class="absolute top-0 left-1 z-70 w-full text-center text-[20pt]">vs.</div>
 	{:else}
-		<div class="absolute top-0 z-70 w-full text-center text-[20pt] font-bold">Solo</div>
+		<div class="absolute top-0 z-70 w-full text-center text-[20pt] font-bold">Let's go !</div>
 	{/if}
 </div>

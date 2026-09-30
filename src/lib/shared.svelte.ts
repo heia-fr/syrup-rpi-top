@@ -26,9 +26,42 @@ export const ui = $state({
 	n_bikes: 2,
 	winner: 0,
 	state: State.Idle,
-	level: [62, 65],
+	level: [0],
+	power: [0, 0],
 	timer: 0
 });
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+	return typeof value === 'object' && value !== null;
+}
+
+function toNumber(value: unknown): number | undefined {
+	if (typeof value !== 'number' && typeof value !== 'string') {
+		return undefined;
+	}
+
+	const numericValue = Number(value);
+	return Number.isFinite(numericValue) ? numericValue : undefined;
+}
+
+function updateValue(values: number[], index: number, value: unknown) {
+	const numericValue = toNumber(value);
+	if (numericValue !== undefined) {
+		values[index] = numericValue;
+	}
+}
+
+function updatePower(payload: Record<string, unknown>, index: number) {
+	updateValue(ui.power, index, payload['power']);
+	updateValue(ui.level, index, payload['energy']);
+}
+
+function updateBikeCount(payload: Record<string, unknown>) {
+	const bikeCount = toNumber(payload['n']);
+	if (bikeCount !== undefined) {
+		ui.n_bikes = bikeCount;
+	}
+}
 
 function clearTimerInterval() {
 	if (!timerInterval) {
@@ -87,28 +120,31 @@ function message_handler(topic: string, payload: Record<string, unknown>) {
 		case 'reload':
 			location.reload();
 			break;
-		case 'gauge/left': {
-			const value = payload['value'];
-			if (typeof value === 'number' || typeof value === 'string') {
-				ui.level[0] = Number(value);
-			}
+		case 'gauge/left':
+			updateValue(ui.level, 0, payload['value']);
 			break;
-		}
-		case 'gauge/right': {
-			const value = payload['value'];
-			if (typeof value === 'number' || typeof value === 'string') {
-				ui.level[1] = Number(value);
-			}
+		case 'power/left':
+			updatePower(payload, 0);
 			break;
-		}
+		case 'gauge/right':
+			updateValue(ui.level, 1, payload['value']);
+			break;
+		case 'power/right':
+			updatePower(payload, 1);
+			break;
 		case 'gauges': {
-			const l = payload['left'];
-			if (typeof l === 'number' || typeof l === 'string') {
-				ui.level[0] = Number(l);
+			for (const [index, value] of [payload['left'], payload['right']].entries()) {
+				updateValue(ui.level, index, value);
 			}
-			const r = payload['right'];
-			if (typeof r === 'number' || typeof r === 'string') {
-				ui.level[1] = Number(r);
+			break;
+		}
+		case 'powers': {
+			const sides = [payload['left'], payload['right']];
+			for (const [index, side] of sides.entries()) {
+				if (!isRecord(side)) {
+					continue;
+				}
+				updatePower(side, index);
 			}
 			break;
 		}
@@ -117,14 +153,13 @@ function message_handler(topic: string, payload: Record<string, unknown>) {
 			break;
 
 		case 'ready': {
-			const n = payload['n'];
-			if (typeof n === 'number' || typeof n === 'string') {
-				ui.n_bikes = Number(n);
-			}
+			updateBikeCount(payload);
 
 			ui.state = State.Ready;
 			ui.level[0] = 0;
 			ui.level[1] = 0;
+			ui.power[0] = 0;
+			ui.power[1] = 0;
 
 			stopTimer();
 			clearDelayedStart();
@@ -136,10 +171,7 @@ function message_handler(topic: string, payload: Record<string, unknown>) {
 				console.warn('Received start command while already running. Ignoring.');
 				return;
 			}
-			const n = payload['n'];
-			if (typeof n === 'number' || typeof n === 'string') {
-				ui.n_bikes = Number(n);
-			}
+			updateBikeCount(payload);
 
 			ui.state = State.Running;
 			stopTimer();
@@ -155,9 +187,9 @@ function message_handler(topic: string, payload: Record<string, unknown>) {
 			if (ui.state !== State.Running) {
 				return;
 			}
-			const winner = payload['w'];
-			if (typeof winner === 'number' || typeof winner === 'string') {
-				ui.winner = Number(winner);
+			const winner = toNumber(payload['w']);
+			if (winner !== undefined) {
+				ui.winner = winner;
 			}
 			pauseTimer();
 			ui.state = State.Finished;
@@ -188,12 +220,16 @@ export function init_client(broker_url: string | null, base_topic: string | null
 	client.on('message', function (topic: string, message: Buffer) {
 		console.log('Received message:', topic.toString(), ' : ', message.toString());
 		try {
-			const obj = JSON.parse(message.toString());
+			const payload: unknown = JSON.parse(message.toString());
+			if (!isRecord(payload)) {
+				console.warn('Ignoring non-object MQTT payload:', payload);
+				return;
+			}
 			topic = topic.slice(base_topic.length); // remove base topic from topic string
 			if (topic.startsWith('/')) {
 				topic = topic.slice(1); // remove leading slash if present
 			}
-			message_handler(topic, obj);
+			message_handler(topic, payload);
 		} catch (error) {
 			console.log('Error parsing message as JSON:', error);
 		}

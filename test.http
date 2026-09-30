@@ -10,7 +10,45 @@ MQTT tcp://{{ MqttBroker }}
 publish: {{TopicBase}}ready
 
 {
-    "n": 1
+    "n": 2
+}
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}gauges
+
+{
+    "left": 30,
+    "right": 30
+}
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}powers
+
+{
+    "left": {
+        "power": 50,
+        "energy": 50
+    },
+    "right": {
+        "power": 100,
+        "energy": 100
+    }
+}
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}power/left
+
+{
+    "power": 100,
+    "energy": 100
+}
+###
+MQTT tcp://{{ MqttBroker }}
+publish: {{TopicBase}}power/right
+
+{
+    "power": 20,
+    "energy": 40
 }
 ###
 MQTT tcp://{{ MqttBroker }}
